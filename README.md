@@ -56,13 +56,13 @@ To restore a backup on a new computer:
 
 3) In S3 Browser, download all of the data under the `Backup` directory to your local machine. This will take a long time to complete. The location on your local machine is referred to as `<S3 backup location>` in the remainder of this document.
 
-4) Follow the instructions at https://github.com/davidbrownell/FileBackup to begin using FileBackup. The installed location will be referred to as `<FileBackup location>` in the remainder of this document.
+4) Download and unzip a FileBackup release from https://github.com/davidbrownell/FileBackup/releases/latest. The installed location will be referred to as `<FileBackup location>` in the remainder of this document.
 
 5) Using KeePass, search for the `Backup` entry in `Dave's Passwords.kbdx`. This password will be referred to as `<encryption password>` in the remainder of this document.
 
 6) Run this command line in `<FileBackup location>` to restore all of the backed up information:
 
-`uv run FileBackup offsite restore "<S3 backup location>" --dir-substitution D\:=C\: --encryption-password <encryption password>`
+`FileBackup offsite restore "<S3 backup location>" --dir-substitution D\:=C\: --encryption-password <encryption password>`
 
 ## Brownell Bootstrap
 
