@@ -65,6 +65,16 @@ The following software must be downloaded installed to restore a backup.
 
 Installation files can be found in `./Files` at https://github.com/davidbrownell/LegacyInformation if the links above aren't working when you try to restore the backup.
 
+### Prerequisite Setup
+
+This process creates [symbolic links](https://en.wikipedia.org/wiki/Symbolic_link), where are disabled by default on Windows. Enabling [Developer Mode](https://learn.microsoft.com/en-us/windows/apps/get-started/developer-mode-features-and-debugging) will introduce changes that allow the creation of these links.
+
+To enable developer mode on Windows:
+
+A) Press the windows key and type "Developer Settings" or "Developer Mode" (which one you use will depend on your version of Windows).
+
+B) Enable "Developer Mode" (the way that this is done will depend on your version of Windows).
+
 ### Restoring a Backup
 
 #### 1) Register S3 Browser
@@ -89,7 +99,7 @@ D) Once the content is available for download, click the "Download" button in S3
 
 In this step, we will decompress the downloaded content, look for errors, and view what will happen on a normal run. However, the backup content will not be restored on your machine yet.
 
-A) Open a terminal by typing "Windows Key + R", typing "terminal", and clicking "OK".
+A) Open a terminal by typing "Windows Key + R", typing `terminal --profile "Command Prompt"`, and clicking "OK".
 
 B) Add 7-Zip to the path by typing `set PATH=%PATH%;%ProgramFiles%\7-Zip`. Note that you will see errors when running FileBackup if you forget to do this.
 
@@ -134,17 +144,22 @@ Putting these rules together, a filename on Windows might looks like:
 | `C:\Dir1\Dir2`      | `C\:/Dir1/Dir2`      |
 | `D:\Dir3\File4.txt` | `D\:/Dir3/File4.txt` |
 
-Let's say that you want to restore content to `C:\RestoredBackup`. To ensure that all files are restored to that location, you would provide the command line arguments:
+Let's say that you want to restore content to `C:\RestoredBackup`. To ensure that all files are restored to that location, you would provide the command line arguments that match this table:
 
-`--dir-substitution "C\:/=C\:/RestoredBackup/C" --dir-substitution "D\:/=C\:/RestoredBackup/D"`
+| Original Location | Restored Location      | Command Line Argument                             |
+| ----------------- | ---------------------- | ------------------------------------------------- |
+| `C:\`             | `C:\RestoredBackup\C\` | `--dir-substitution "C\:/=C\:/RestoredBackup/C/"` |
+| `D:\`             | `C:\RestoredBackup\D\` | `--dir-substitution "D\:/=C\:/RestoredBackup/D/"` |
 
-to map everything backed up from the `C:\` drive to `C:\RestoredBackup\C` and everything backed up from the `D:\` drive to `C:\RestoredBackup\D`.
+resulting in:
+
+`--dir-substitution "C\:/=C\:/RestoredBackup/C/" --dir-substitution "D\:/=C\:/RestoredBackup/D/"`
 
 A) Run `FileBackup offset restore Backup "<S3 backup location>" --encryption-password "<encryption password>" --working-dir "<working directory>" <dir substitutions here> --dry-run`.
 
 B) Inspect the dry run output to make sure that files will be written to the expected location.
 
-#### 5) FileBackup (restore files)
+#### 5) FileBackup (Restore Files)
 
 Finally, we can restore the files! Run the command line in the previous section, removing the `--dry-run` command line argument.
 
