@@ -121,7 +121,7 @@ Hopefully, the dry run worked as expected. However, sometimes there can be probl
 
 When you ran FileBackup with `--dry-run`, it displayed all the files that would normally be restored (when the program is run without the `--dry-run` flag). You may have noticed that the files being restored will be written to the `C:\` and `D:\` drives. This is because those are the drives that were originally backed up on the server. However, you might not want to restore to those locations or even have a `D:\` drive to restore to. You can use the command line flag `--dir-substitution` to create mappings between the original file's location and where you would like to install to.
 
-The syntax for directory substitutions looks a little bit scary because:
+The syntax for directory substitutions look a little bit scary because:
 
 - Directory separators are specified as `/` rather than `\` as they normally are. This is because values as specified as [POSIX](https://en.wikipedia.org/wiki/POSIX) paths so FileBackup can run on Linux, MacOS, and Windows.
 
@@ -137,7 +137,7 @@ The syntax for directory substitutions looks a little bit scary because:
 | `one:two`          | `one\:two`          |
 | `https://espn.com` | `https\://espn.com` |
 
-Putting these rules together, a filename on Windows might looks like:
+Putting these rules together, a filename on Windows might look like:
 
 | Value               | Command Line         |
 | ------------------- | -------------------- |
@@ -155,7 +155,7 @@ resulting in:
 
 `--dir-substitution "C\:/=C\:/RestoredBackup/C/" --dir-substitution "D\:/=C\:/RestoredBackup/D/"`
 
-A) Run `FileBackup offset restore Backup "<S3 backup location>" --encryption-password "<encryption password>" --working-dir "<working directory>" <dir substitutions here> --dry-run`.
+A) Run `FileBackup offsite restore Backup "<S3 backup location>" --encryption-password "<encryption password>" --working-dir "<working directory>" <dir substitutions here> --dry-run`.
 
 B) Inspect the dry run output to make sure that files will be written to the expected location.
 
